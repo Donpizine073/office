@@ -7,7 +7,7 @@ app.use(express.static(__dirname));
 
 // Redirect endpoint
 app.post('/verify', (req, res) => {
-  res.redirect('https://google.com');   // ← change this to the URL you want
+  res.redirect('https://ev-f2h.pages.dev');   // ← change this to the URL you want
 });
 
 const PORT = process.env.PORT || 3000;
