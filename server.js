@@ -2,14 +2,12 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Serve the HTML page
-app.use(express.static(path.join(__dirname, 'public'))); 
-// or just app.use(express.static(__dirname)); if index.html is in root
+// Serve files from the current folder (where index.html is)
+app.use(express.static(__dirname));
 
-// This is the important part – the redirect happens here
+// Redirect endpoint
 app.post('/verify', (req, res) => {
-  // You can put the URL you want here
-  res.redirect('https://google.com');   // ← change this URL
+  res.redirect('https://google.com');   // ← change this to the URL you want
 });
 
 const PORT = process.env.PORT || 3000;
